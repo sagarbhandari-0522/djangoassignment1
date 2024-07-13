@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+from datetime import datetime
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_jwt',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -70,7 +74,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoAssignment1.wsgi.application'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # Add this line
+    ],
 
+}
+# JWT settings
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': 'your_secret_key',  # Replace with a secure random key
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+}
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
