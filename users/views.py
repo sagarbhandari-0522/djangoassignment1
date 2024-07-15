@@ -1,3 +1,4 @@
+from django.contrib.auth import authenticate
 from django.shortcuts import render
 
 # Create your views here.
@@ -28,9 +29,24 @@ class UserRegisterAPIView(APIView):
             token = jwt_encode_handler(payload)
             response = {
                 'success': True,
-                'user': user,
+                'user': user.username,
                 'token': token
             }
             return Response(response, status=status.HTTP_200_OK)
         raise ValidationError(
             serializer.errors, code=status.HTTP_406_NOT_ACCEPTABLE)
+
+
+class UserLoginAPIView(APIView):
+    def post(self, request, *args, **kargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        user = authenticate(username=username, password=password)
+        if user:
+            payload = jwt_payload_handler(user)
+            token = jwt_encode_handler(payload)
+            response = {
+                'token': token
+            }
+            return Response(response, status=status.HTTP_200_OK)
+        return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
