@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, logout
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,12 +12,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.settings import api_settings
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # serializer
 from .serializers import UserRegisterSerializer
-
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
 
 class UserRegisterAPIView(APIView):
@@ -25,12 +23,10 @@ class UserRegisterAPIView(APIView):
         serializer = UserRegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            payload = jwt_payload_handler(user)
-            token = jwt_encode_handler(payload)
+            token, created = Token.objects.get_or_create(user=user)
             response = {
                 'success': True,
-                'user': user.username,
-                'token': token
+                'token': token.key
             }
             return Response(response, status=status.HTTP_200_OK)
         raise ValidationError(
@@ -43,10 +39,21 @@ class UserLoginAPIView(APIView):
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if user:
-            payload = jwt_payload_handler(user)
-            token = jwt_encode_handler(payload)
+            token, created = Token.objects.get_or_create(user=user)
             response = {
-                'token': token
+                'token': token.key
             }
             return Response(response, status=status.HTTP_200_OK)
         return Response({"error": "Invalid Credentials"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class UserLogoutAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token_key = request.auth.key
+            Token.objects.filter(key=token_key).delete()
+            return Response({"success": "Successfully logged out"}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
