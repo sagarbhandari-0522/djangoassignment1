@@ -1,22 +1,19 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.GitHub/workflows,deps:python:.,file:manage.py:.
 version: 2.1
+
 jobs:
-  test-python:
+  test-and-lint:
     docker:
       - image: cimg/python:3.10.1
     steps:
       - checkout
-      - python/install-packages
       - run:
           name: install dependencies
           command: pip install -r requirements.txt
       - run:
-          name: Run tests
+          name: run tests
           command: python manage.py test
 
 workflows:
-  build-and-test:
+  build-and-test-workflow:
     jobs:
-      - test-python
-
+      - test-and-lint
