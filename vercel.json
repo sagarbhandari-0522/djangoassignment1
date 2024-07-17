@@ -13,7 +13,7 @@
       "dest": "djangoAssignment1/wsgi.py",
       "headers": {
           "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET, POST OPTIONS, DELETE,PUT"
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS, DELETE,PUT"
         }
     },
     {
