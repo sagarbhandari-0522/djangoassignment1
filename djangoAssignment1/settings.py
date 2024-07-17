@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e7fn&(69r9z&+05=*_-gz#=%^)h*)p4m&ni=5(5(%-+_bi!p4&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", "localhost"]
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', 'localhost']
 
 # Application definition
 
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangoAssignment1.wsgi.app'
+WSGI_APPLICATION = 'djangoassignment1.wsgi.app'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
