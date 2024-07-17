@@ -2,7 +2,7 @@
   "framework": null,
   "builds": [
     {
-      "src": "djangoassignment1/wsgi.py",
+      "src": "djangoAssignment1/wsgi.py",
       "use": "@vercel/python",
       "config": {"maxLambdaSize": "15mb", "runtime": "python3.9"}
     }
@@ -10,7 +10,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "djangoassignment1/wsgi.py",
+      "dest": "djangoAssignment1/wsgi.py",
       "headers": {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Methods": "GET, POST OPTIONS, DELETE,PUT"
@@ -18,7 +18,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "djangoassignment1/wsgi.py"
+      "dest": "djangoAssignment1/wsgi.py"
     }
   ]
 }
