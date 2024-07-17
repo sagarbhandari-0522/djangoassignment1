@@ -70,11 +70,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'djangoassignment1.wsgi.app'
+WSGI_APPLICATION = 'djangoAssignment1.wsgi.app'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',  # Add this line
     ],
 
