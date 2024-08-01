@@ -1,2 +1,4 @@
 *.pyc
 .venv/
+.idea/.name
+ users/__pycache__/serializers.cpython-312.pyc
